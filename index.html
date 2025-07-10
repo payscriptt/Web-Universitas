@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Universitas SPA - Vue</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    <header>
+  <div class="header-container">
+     <div class="brand">
+      <img src="logo.png" alt="Logo Universitas" class="brand-logo" />
+      <span class="brand-name">UNIVERSITAS PAY NUSANTARA</span>
+    </div>
+   <nav>
+  <ul>
+    <li><a href="#" @click.prevent="goToPage('beranda')">Beranda</a></li>
+    <li><a href="#" @click.prevent="goToPage('profil')">Profil</a></li>
+    
+ 
+   <li class="dropdown" style="position: relative;">
+  <a href="#" 
+     @click.prevent="toggleProdiDropdown"
+     style="display: inline-flex; align-items: center; gap: 4px;">
+    Program Studi
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="20" height="20" fill="currentColor" viewBox="0 0 24 24"
+         :style="{ transform: showProdiDropdown ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }">
+      <path d="M7 10l5 5 5-5H7z" />
+    </svg>
+  </a>
+
+  <ul v-if="showProdiDropdown" class="dropdown-menu">
+    <li v-for="(prodi, index) in prodiList" :key="index">
+      <a href="#" @click.prevent="selectProdi(prodi)">
+        {{ prodi.nama }}
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+  <li class="dropdown">
+  <a href="#"
+     @click.prevent="togglePendaftaranDropdown"
+     style="display: inline-flex; align-items: center; gap: 4px;">
+    Pendaftaran
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20" height="20" fill="currentColor" viewBox="0 0 24 24"
+      :style="{
+        transform: showPendaftaranDropdown ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.2s ease'
+      }"
+    >
+      <path d="M7 10l5 5 5-5H7z" />
+    </svg>
+  </a>
+   <ul v-if="showPendaftaranDropdown" class="dropdown-menu">
+    <li><a href="#" @click.prevent="goToPage('calon')">Calon Mahasiswa</a></li>
+    <li><a href="#" @click.prevent="goToPage('pembayaran')">Pembayaran</a></li>
+  </ul>
+</li>
+
+
+ <li><a href="#" @click.prevent="scrollToFooter">Kontak</a></li>
+
+  </ul>
+</nav>
+  </div>
+</header>
+
+
+    <main>
+     <section class="beranda-hero" v-if="currentPage === 'beranda'">
+    <p class="subjudul">Selamat Datang di Website</p>
+    <h1 class="judul-besar">Universitas Pay Nusantara</h1>
+    <p class="isijudul">Kami adalah universitas unggulan dengan banyak program studi pilihan.</p>
+    </section>
+
+      <section v-if="currentPage === 'profil'" class="profil">
+
+
+  <div class="profil-card">
+    <img src="logo.png" alt="Logo Universitas" class="profil-logo" />
+
+    <div class="profil-info">
+      <p><strong>Nama:</strong> Universitas Pay Nusantara</p>
+      <p><strong>Didirikan:</strong> 2002</p>
+      <p><strong>Akreditasi:</strong> A</p>
+      <p><strong>Lokasi:</strong> Jakarta Selatan</p>
+      <p><strong>Motto:</strong> "Ilmu Untuk Masa Depan"</p>
+    </div>
+  </div>
+
+  <div class="profil-tentang">
+    <h3>Tentang Universitas</h3>
+    <p>
+      Universitas Pay Nusantara adalah institusi pendidikan tinggi yang
+      berkomitmen pada pengembangan ilmu pengetahuan, teknologi, dan karakter.
+      Kami fokus pada inovasi, kolaborasi, dan integritas dalam mencetak lulusan
+      unggul dan berdaya saing global.
+    </p>
+  </div>
+
+  <div class="profil-visi">
+    <h3>Visi</h3>
+    <p>Menjadi universitas unggul bertaraf internasional dalam pendidikan, penelitian, dan pengabdian masyarakat.</p>
+
+    <h3>Misi</h3>
+    <ul>
+      <li>Menyelenggarakan pendidikan tinggi yang bermutu.</li>
+      <li>Mengembangkan penelitian yang inovatif dan aplikatif.</li>
+      <li>Mendorong pengabdian kepada masyarakat yang berdampak nyata.</li>
+    </ul>
+  </div>
+</section>
+
+
+     <section v-if="currentPage === 'prodi' && selectedProdi">
+    <h2>{{ selectedProdi.nama }}</h2>
+    <p>{{ selectedProdi.deskripsi }}</p>
+    <button @click="currentPage = 'beranda'; selectedProdi = null">← Kembali ke Beranda</button>
+  </section>
+
+     <section v-if="currentPage === 'calon'" class="form-section">
+  <h2>Formulir Calon Mahasiswa</h2>
+  <form @submit.prevent="submitCalonMahasiswa">
+    <label>Nama Lengkap: <input type="text" v-model="formCalon.nama" required /></label>
+
+    <label>Tempat Lahir: <input type="text" v-model="formCalon.tempatLahir" required /></label>
+
+    <label>Tanggal Lahir: <input type="date" v-model="formCalon.tanggalLahir" required /></label>
+
+    <label>Jenis Kelamin:
+      <select v-model="formCalon.jenisKelamin" required>
+        <option disabled value="">Pilih</option>
+        <option>Laki-laki</option>
+        <option>Perempuan</option>
+      </select>
+    </label>
+
+    <label>Alamat Lengkap: <textarea v-model="formCalon.alamat" required></textarea></label>
+
+    <label>Nomor HP: <input type="tel" v-model="formCalon.hp" required /></label>
+
+    <label>Email: <input type="email" v-model="formCalon.email" required /></label>
+
+    <label>Alasan Berkuliah:
+      <textarea v-model="formCalon.alasan" required></textarea>
+    </label>
+
+    <button type="submit">Kirim</button>
+  </form>
+</section>
+
+
+<section v-if="currentPage === 'pembayaran'" class="form-section">
+  <h2>Formulir Pembayaran</h2>
+  <form @submit.prevent="submitPembayaran">
+    <label>Nama Lengkap: <input type="text" v-model="formBayar.nama" required /></label>
+
+    <label>Jumlah Pembayaran (Rp): <input type="number" v-model="formBayar.jumlah" required /></label>
+
+    <label>Status Pembayaran:
+      <select v-model="formBayar.status" required>
+        <option disabled value="">Pilih</option>
+        <option>Lunas</option>
+        <option>Belum Lunas</option>
+      </select>
+    </label>
+
+    <button type="submit">Kirim</button>
+  </form>
+</section>
+
+
+
+      <section v-if="currentPage === 'kontak'">
+        <h2>Kontak Kami</h2>
+        <p>Email: info@univspa.ac.id<br>Telepon: (021) 123-4567</p>
+      </section>
+    </main>
+
+   <footer id="footer">  
+    <p>Email: info@unipn.ac.id | Telepon: (021) 123-4567</p>
+    <p>© 2025 Universitas Pay Nusantara</p>
+
+</footer>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+    return {
+      currentPage: 'beranda',
+      selectedProdi: null,
+      showProdiDropdown: false,
+      currentPage: 'beranda',
+      showPendaftaranDropdown: false,
+       formCalon: {
+      nama: '',
+      tempatLahir: '',
+      tanggalLahir: '',
+      jenisKelamin: '',
+      alamat: '',
+      hp: '',
+      email: '',
+      alasan: ''
+    },
+    formBayar: {
+      nama: '',
+      jumlah: '',
+      status: ''
+    },
+      prodiList: [
+        {
+          nama: "Teknik Informatika",
+          deskripsi: "Program yang fokus pada pengembangan perangkat lunak, kecerdasan buatan, dan pemrograman komputer."
+        },
+        {
+          nama: "Sistem Informasi",
+          deskripsi: "Menggabungkan ilmu komputer dan bisnis untuk membangun solusi sistem informasi dalam organisasi."
+        },
+        {
+          nama: "Manajemen",
+          deskripsi: "Mempelajari manajemen sumber daya, organisasi, kepemimpinan, dan bisnis secara umum."
+        },
+        {
+          nama: "Akuntansi",
+          deskripsi: "Fokus pada pengelolaan laporan keuangan, audit, dan perpajakan untuk berbagai sektor."
+        }
+      ]
+    };
+  },
+  methods: {
+    goToPage(page) {
+  this.currentPage = page;
+  this.selectedProdi = null;
+  this.showProdiDropdown = false;
+  this.showPendaftaranDropdown = false;
+},
+    toggleProdiDropdown() {
+      this.showProdiDropdown = !this.showProdiDropdown;
+    },
+    selectProdi(prodi) {
+      this.selectedProdi = prodi;
+      this.currentPage = 'prodi';
+      this.showProdiDropdown = false;
+    },
+    scrollToFooter() {
+  this.selectedProdi = null;
+  this.currentPage = 'beranda'; 
+  this.showProdiDropdown = false;
+  this.$nextTick(() => {
+    const footer = document.getElementById("footer");
+    if (footer) {
+      footer.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+},
+    togglePendaftaranDropdown() {
+    this.showPendaftaranDropdown = !this.showPendaftaranDropdown;
+    this.showProdiDropdown = false;
+  },
+   submitCalonMahasiswa() {
+    alert("Data calon mahasiswa berhasil disimpan!");
+    console.log(this.formCalon);
+     fetch('http://localhost/univ-spa/insert_calon.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(this.formCalon)
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.message);
+    // Reset form jika perlu
+    this.formCalon = {
+      nama: '',
+      tempatLahir: '',
+      tanggalLahir: '',
+      jenisKelamin: '',
+      alamat: '',
+      hp: '',
+      email: '',
+      alasan: ''
+    };
+  })
+  .catch(error => {
+    alert("Terjadi kesalahan saat mengirim data.");
+    console.error(error);
+  });
+  },
+  submitPembayaran() {
+    alert("Data pembayaran berhasil disimpan!");
+    console.log(this.formBayar);
+     fetch('http://localhost/univ-spa/insert_pembayaran.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(this.formBayar)
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.message);
+    this.formBayar = {
+      nama: '',
+      jumlah: '',
+      status: ''
+    };
+  })
+  .catch(error => {
+    alert("Gagal menyimpan data pembayaran.");
+    console.error(error);
+  });
+  },
+  
+
+  }
+    }).mount('#app');
+  </script>
+</body>
+</html>

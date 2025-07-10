@@ -1,0 +1,341 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+#app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+header {
+  background-color: #1c2a48;
+  padding: 0;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+  background-color: #1c2a48;
+  margin: 0;
+}
+
+nav li {
+  position: relative;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 1rem 1.2rem;
+  display: block;
+}
+
+
+nav a:hover {
+  background-color: #1c2a48;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+}
+
+footer {
+  background-color: #1c2a48;
+  color: white;
+  text-align: center;
+  padding: 1rem 1rem;
+  margin-top: 1rem;
+  
+}
+
+
+.profil {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+
+.profil h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+
+.profil-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  padding: 2rem;
+  border-radius: 12px;
+  
+  margin-bottom: 2rem;
+}
+
+
+.profil-logo {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+
+.profil-info p {
+  margin: 0.3rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+
+.profil-tentang {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+
+.profil-visi {
+  text-align: left;
+}
+
+
+.profil h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 0.8rem;
+}
+
+
+.profil p {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+
+.profil-visi ul {
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+
+.profil-visi li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.prodi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+
+.prodi-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  width: 100%;
+}
+
+.prodi-list button {
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  background-color: #1c2a48;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.prodi-list button:hover {
+  background-color: #1c2a48;
+}
+
+
+.prodi-detail {
+  background-color: #ecf0f1;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.kembali-btn {
+  margin-top: 1rem;
+  background-color: #1c2a48;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.kembali-btn:hover {
+  background-color: #1c2a48;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #1c2a48;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 999;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+
+.dropdown-menu li a {
+  padding: 0.8rem 1.2rem;
+  color: white;
+  white-space: nowrap;
+  background-color: #1c2a48;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #1c2a48;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+}
+
+.beranda-hero {
+  text-align: center;
+  padding: 4rem 1rem;
+ 
+  color: black;
+}
+
+.subjudul {
+  font-size: 1.5rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.judul-besar {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.isijudul{
+    font-size: 1rem;
+}
+
+.form-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-section form label {
+  display: block;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-section input,
+.form-section textarea,
+.form-section select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-section button {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  background-color: #1c2a48;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
